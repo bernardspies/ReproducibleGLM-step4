@@ -109,7 +109,7 @@ pval
 ```
 
 ```
-## [1] 0.9126752
+## [1] 0.05788557
 ```
 
 ```r
@@ -137,7 +137,7 @@ sum(replicate(1000,pass_ttest(titanic_all$survived)))/1000
 ```
 
 ```
-## [1] 0.933
+## [1] 0.934
 ```
 
 #### How do we get the same sample every time?
@@ -995,6 +995,7 @@ trainres<-data.frame(
   simple=predict(simple,titanic_train_c),
   net=predict(net,titanic_train_c),
   boosted=predict(boosted,titanic_train_c),
+  cforest=predict(cforest,titanic_train_c),
   allinval=predict(allin,titanic_train_c,type = "prob"),
   simpleval=predict(simple,titanic_train_c,type = "prob"),
   netval=predict(net,titanic_train_c,type = "prob"),
@@ -1009,6 +1010,7 @@ testres<-data.frame(
   simple=predict(simple,titanic_test_c_na),
   net=predict(net,titanic_test_c_na),
   boosted=predict(boosted,titanic_test_c_na),
+  cforest=predict(cforest,titanic_test_c_na),
   allinval=predict(allin,titanic_test_c_na,type = "prob"),
   simpleval=predict(simple,titanic_test_c_na,type = "prob"),
   netval=predict(net,titanic_test_c_na,type = "prob"),
