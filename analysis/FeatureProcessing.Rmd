@@ -37,7 +37,7 @@ prop.table(table(titanic_train_c$pclass,  titanic_train_c$survived),margin = 1)
 ```
 
 ```{r sex}
-convertsex<-function(x) factor(x, labels=c("male","female"))
+convertsex<-function(x) factor(x, labels=c("female","male"))
 titanic_train_c$sex <- convertsex(titanic_train_c$sex)
 prop.table(table(titanic_train_c$sex,  titanic_train_c$survived),1)
 ```
