@@ -109,7 +109,7 @@ pval
 ```
 
 ```
-## [1] 0.1804588
+## [1] 0.9126752
 ```
 
 ```r
@@ -137,7 +137,7 @@ sum(replicate(1000,pass_ttest(titanic_all$survived)))/1000
 ```
 
 ```
-## [1] 0.938
+## [1] 0.933
 ```
 
 #### How do we get the same sample every time?
@@ -860,6 +860,77 @@ boosted<-caret::train(survived~.,                                       data=tit
 ## Loading required package: plyr
 ```
 
+## random forest
+
+```r
+cforest<-caret::train(survived~.,                                       data=titanic_train_c,
+                    method="cforest"
+                    )
+```
+
+```
+## Loading required package: party
+```
+
+```
+## Loading required package: mvtnorm
+```
+
+```
+## Loading required package: modeltools
+```
+
+```
+## Loading required package: stats4
+```
+
+```
+## 
+## Attaching package: 'modeltools'
+```
+
+```
+## The following object is masked from 'package:plyr':
+## 
+##     empty
+```
+
+```
+## Loading required package: strucchange
+```
+
+```
+## Loading required package: zoo
+```
+
+```
+## 
+## Attaching package: 'zoo'
+```
+
+```
+## The following objects are masked from 'package:base':
+## 
+##     as.Date, as.Date.numeric
+```
+
+```
+## Loading required package: sandwich
+```
+
+```
+## 
+## Attaching package: 'party'
+```
+
+```
+## The following objects are masked from 'package:partykit':
+## 
+##     cforest, ctree, ctree_control, edge_simple, mob, mob_control,
+##     node_barplot, node_bivplot, node_boxplot, node_inner,
+##     node_surv, node_terminal
+```
+
 
 ```r
 summary(boosted)
@@ -927,7 +998,8 @@ trainres<-data.frame(
   allinval=predict(allin,titanic_train_c,type = "prob"),
   simpleval=predict(simple,titanic_train_c,type = "prob"),
   netval=predict(net,titanic_train_c,type = "prob"),
-  boostedval=predict(boosted,titanic_train_c,type = "prob")
+  boostedval=predict(boosted,titanic_train_c,type = "prob"),
+  cforestval=predict(cforest,titanic_train_c,type = "prob")
 )
 
 titanic_test_c_na<-na.omit(titanic_test_c)
@@ -940,7 +1012,9 @@ testres<-data.frame(
   allinval=predict(allin,titanic_test_c_na,type = "prob"),
   simpleval=predict(simple,titanic_test_c_na,type = "prob"),
   netval=predict(net,titanic_test_c_na,type = "prob"),
-  boostedval=predict(boosted,titanic_test_c_na,type = "prob")
+  boostedval=predict(boosted,titanic_test_c_na,type = "prob"),
+  cforestval=predict(cforest,titanic_test_c_na,type = "prob")
+  
 )
 ```
 
@@ -1275,6 +1349,22 @@ library(optiRum)
 ```
 
 ![](FullModel_files/figure-html/gboosted-2.png)<!-- -->
+
+### cforest
+
+```r
+  giniChart(trainres$cforestval.Survived,trainres$actual)
+```
+
+![](FullModel_files/figure-html/gcforest-1.png)<!-- -->
+
+```r
+  giniChart(testres$cforestval.Survived,testres$actual)
+```
+
+![](FullModel_files/figure-html/gcforest-2.png)<!-- -->
+
+
 
 ## Selecting a model
 We can discard the simple model - it doesn't give sufficient discrimination compared to the other models.

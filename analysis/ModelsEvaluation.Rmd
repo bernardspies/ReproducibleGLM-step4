@@ -16,7 +16,8 @@ trainres<-data.frame(
   allinval=predict(allin,titanic_train_c,type = "prob"),
   simpleval=predict(simple,titanic_train_c,type = "prob"),
   netval=predict(net,titanic_train_c,type = "prob"),
-  boostedval=predict(boosted,titanic_train_c,type = "prob")
+  boostedval=predict(boosted,titanic_train_c,type = "prob"),
+  cforestval=predict(cforest,titanic_train_c,type = "prob")
 )
 
 titanic_test_c_na<-na.omit(titanic_test_c)
@@ -29,7 +30,9 @@ testres<-data.frame(
   allinval=predict(allin,titanic_test_c_na,type = "prob"),
   simpleval=predict(simple,titanic_test_c_na,type = "prob"),
   netval=predict(net,titanic_test_c_na,type = "prob"),
-  boostedval=predict(boosted,titanic_test_c_na,type = "prob")
+  boostedval=predict(boosted,titanic_test_c_na,type = "prob"),
+  cforestval=predict(cforest,titanic_test_c_na,type = "prob")
+  
 )
 ```
 
@@ -84,6 +87,14 @@ library(optiRum)
   giniChart(trainres$boostedval.Survived,trainres$actual)
   giniChart(testres$boostedval.Survived,testres$actual)
 ```
+
+### cforest
+```{r gcforest}
+  giniChart(trainres$cforestval.Survived,trainres$actual)
+  giniChart(testres$cforestval.Survived,testres$actual)
+```
+
+
 
 ## Selecting a model
 We can discard the simple model - it doesn't give sufficient discrimination compared to the other models.

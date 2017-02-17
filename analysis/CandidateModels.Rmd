@@ -42,6 +42,13 @@ boosted<-caret::train(survived~.,                                       data=tit
                     )
 ```
 
+## random forest
+```{r cforest , results='hide'}
+cforest<-caret::train(survived~.,                                       data=titanic_train_c,
+                    method="cforest"
+                    )
+```
+
 ```{r gbmprint}
 summary(boosted)
 caret::varImp(boosted)
